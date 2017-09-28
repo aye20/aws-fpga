@@ -44,7 +44,7 @@
 
 ## 4. Create your Runtime AMI based on your Instance.
 
-* Once you have all your application details you should be able to create a Runtime AMI from your Runtime Instance as specificed [here](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html):
+* Once you have all your application details you should be able to create a Runtime AMI from your Runtime Instance as specificed [here](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html).
 
 
 
