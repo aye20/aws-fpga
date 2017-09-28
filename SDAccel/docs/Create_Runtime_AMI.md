@@ -1,62 +1,50 @@
 # Create a Runtime AMI Starting with an Amazon Linux AMI                          
 
-## 
-Start launching an instance with an [Amazon Linux AMI](https://aws.amazon.com/marketplace/pp/B00635Y2IW)
+## 1. Launch a Runtime Instance & Install Required Packages 
 
+* Launch an F1 instance using an [Amazon Linux AMI](https://aws.amazon.com/marketplace/pp/B00635Y2IW)
+* Install the required updates and pacckages
 
 ````
   $ sudo yum update
   $ sudo yum install git
   $ sudo yum install gcc
-  $ sudo mkdir -p /etc/OpenCL/vendors/
   $ sudo yum install gcc-c++          
   $ sudo yum install kernel-headers   
   $ sudo yum install kernel-devel     
   $ sudo yum --enablerepo=epel install ocl-icd ocl-icd-devel opencl-headers
-  $ aws configure                                                          
-````                                                                       
+  $ sudo mkdir -p /etc/OpenCL/vendors/
+````  
+                                                              
+## 2. Copy required Xilinx SDAccel Runtime Libraries to the Instance and Reboot your Runtime Instance. 
+<!--- # ENHANCEMENT: We should consider whether these files can be added to github --->
 
-Reboot instance to ensure all upgrades to instance work as expected
+* On an instance running [FPGA Developer AMI](https://aws.amazon.com/marketplace/pp/B06VVYBLZZ) or on a local machine with access to a Xilinx SDAccel Tools Installation copy required files into a single directory:
 
+````
+   $ mkdir -p xlnxrte/lib/lnx64.o
+   $ mkdir -p xlnxrte/runtime/bin
+   $ cp $XIILNX_SDX/lib/lnx64.o/libstdc++.so* xlnxrte/lib/lnx64.o/.
+   $ cp $XIILNX_SDX/lib/lnx64.o/libxilinxopencl.so xlnxrte/lib/lnx64.o/.
+   $ cp $XIILNX_SDX/runtime/bin/xclbinsplit xlnxrte/runtime/bin         
+   $ cp $XIILNX_SDX/runtime/bin/xclbincat xlnxrte/runtime/bin
+````
 
-<-- We should consider whether these files can be added to github -->
+* Copy xlnxrte directory created to /home/ec2-user/ on your Runtime Instance.
+* Reboot your Runtime Instance to ensure all upgrades are running.
 
-On an instance or local machine  with access to a XILINX 2017.1_sdx SDAccel Tools Installation or using an FPGA Dev AMI:
+## 3. Install Runtime Drivers and run your FPGA accelerated application on your Runtime Instance. 
+* Log back on to the Runtime Instance:
 
-   mkdir -p xlnxrte/lib/lnx64.o
-   mkdir -p xlnxrte/runtime/bin
-   cp $XIILNX_SDX/lib/lnx64.o/libstdc++.so* xlnxrte/lib/lnx64.o/.
-   cp $XIILNX_SDX/lib/lnx64.o/libxilinxopencl.so xlnxrte/lib/lnx64.o/.
-   cp $XIILNX_SDX/runtime/bin/xclbinsplit xlnxrte/runtime/bin         
-   cp $XIILNX_SDX/runtime/bin/xclbincat xlnxrte/runtime/bin
-
-
-Copy xlnxrte directory to your Runtime instance.
-
-Reboot instance to ensure all upgrades to instance work as expected
-
-
-Log back on to the runtime instance:
-
+```
   $ export XILINX_SDX=/home/ec2-user/xlnxrte
-  $ git clone https://github.com/aws/aws-fpga.git
-  $ cd aws-fpga/
-  $ source sdaccel_setup.sh
-
-You should be able to execute your application as specified in:
-
-https://github.com/aws/aws-fpga/tree/master/SDAccel#runonf1
+````
+* You should be able to [run your FPGA accelerated application as described here](https://github.com/aws/aws-fpga/tree/master/SDAccel#runonf1), without needing to launch a new F1 instance
 
 
-Once you have all your application details you should be able to create an AMI from your instnace as specificed here:
+## 4. Create your Runtime AMI based on your Instance.
 
-http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html
+* Once you have all your application details you should be able to create a Runtime AMI from your Runtime Instance as specificed [here](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html):
 
 
-User of AMI would need:
-
-  $ cd aws-fpga/
-  $ source sdaccel_setup.sh
-
-And execute application.
 
