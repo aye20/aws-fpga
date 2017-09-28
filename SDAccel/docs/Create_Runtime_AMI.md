@@ -48,5 +48,5 @@
 
 ## 5. Make AMI available on the AWS Marketplace
 
-* Please see (Section 5 of the AWS Marketplace Seller's Guide](https://awsmp-loadforms.s3.amazonaws.com/AWS_Marketplace_-_Seller_Guide.pdf#page=19) for more details. 
+* Please see [Section 5 of the AWS Marketplace Seller's Guide](https://awsmp-loadforms.s3.amazonaws.com/AWS_Marketplace_-_Seller_Guide.pdf#page=19) for more details. 
 
