@@ -3,7 +3,7 @@
 ## 1. Launch a Runtime Instance & Install Required Packages 
 
 * Launch an F1 instance using an [Amazon Linux AMI](https://aws.amazon.com/marketplace/pp/B00635Y2IW)
-* Install the required updates and pacckages
+* Install the required updates and packages
 
 ````
   $ sudo yum update
@@ -44,7 +44,7 @@
 
 ## 4. Create your Runtime AMI based on your Instance.
 
-* Once you have all your application details you should be able to create a Runtime AMI from your Runtime Instance as specificed [here](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html).
+* Once you have all your application details you should be able to create a Runtime AMI from your Runtime Instance as specified [here](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html).
 
 ## 5. Make AMI available on the AWS Marketplace
 
