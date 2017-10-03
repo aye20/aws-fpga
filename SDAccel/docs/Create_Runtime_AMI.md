@@ -1,12 +1,18 @@
-# Create a Runtime AMI Starting with an Amazon Linux AMI                          
+# Create a Runtime AMI Starting with an Amazon Linux AMI or Ubuntu                          
 
 ## 1. Launch a Runtime Instance & Install Required Packages 
 
+### Using Amazon Linux
+
 * Launch an F1 instance using an [Amazon Linux AMI](https://aws.amazon.com/marketplace/pp/B00635Y2IW)
-* Install the required updates and packages
+* Install the required updates
 
 ````
   $ sudo yum update
+````
+* Reboot your Runtime Instance to ensure all updates are running.
+* Install the required packages
+````
   $ sudo yum install git
   $ sudo yum install gcc
   $ sudo yum install gcc-c++          
@@ -15,7 +21,28 @@
   $ sudo yum --enablerepo=epel install ocl-icd ocl-icd-devel opencl-headers
   $ sudo mkdir -p /etc/OpenCL/vendors/
 ````  
-                                                              
+
+### Using Ubuntu
+
+* Launch an F1 instance using an [Ubuntu 16.04 LTS](https://aws.amazon.com/marketplace/pp/B01JBL2I8U)
+* Install the required updates
+````
+   $ sudo apt-get update  
+````
+* Reboot your Runtime Instance to ensure all upgrades are running.
+* Install the required packages
+````
+  $ sudo apt-get install gcc
+  $ sudo apt-get install g++          
+  $ sudo apt-get install make
+  $ sudo apt-get install linux-headers-`uname -r`   
+  $ sudo apt-get install linux-libc-dev     
+  $ sudo apt-get install ocl-icd-dev ocl-icd-libopencl1 opencl-headers
+  $ sudo apt install ocl-icd-opencl-dev
+  $ sudo mkdir -p /etc/OpenCL/vendors/
+````  
+
+
 ## 2. Copy required Xilinx SDAccel Runtime Libraries to the Instance and Reboot your Runtime Instance. 
 <!--- # ENHANCEMENT: We should consider whether these files can be added to github --->
 
@@ -31,7 +58,7 @@
 ````
 
 * Copy xlnxrte directory created to /home/ec2-user/ on your Runtime Instance.
-* Reboot your Runtime Instance to ensure all upgrades are running.
+
 
 ## 3. Install Runtime Drivers and run your FPGA accelerated application on your Runtime Instance. 
 * Log back on to the Runtime Instance:
